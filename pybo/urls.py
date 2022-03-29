@@ -4,4 +4,5 @@ from . import views
 
 urlpatterns = [
     path('', views.index),
+    path('<int:question_id>/', views.detail), # int: 숫자가 매핑됨을 의미
 ]
