@@ -5,7 +5,6 @@ class Question(models.Model):
     subject = models.CharField(max_length=200)  # CharField: 글자수 제한에 사용. max_length: 최대 글자수.
     content = models.TextField()                # TextField: 글자수 제한 없음.
     create_date = models.DateTimeField()        # DateTimeField: 날짜, 시간에 관계된 속성.
-
     def __str__(self):
         return self.subject
 
