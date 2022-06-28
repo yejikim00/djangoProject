@@ -46,7 +46,7 @@ def answer_create(request, question_id):
 
 def question_create(request):
     if request.method == 'POST':    # 데이터 입력이 끝나 '저장하기=submit'을 누르면 post요청으로 바뀜.
-        form = QuestionForm(request.POST)   # f답rm에 데이터 저장, request.POST: 사용자가 입력한 내용이 담김.
+        form = QuestionForm(request.POST)   # form에 데이터 저장, request.POST: 사용자가 입력한 내용이 담김.
         if form.is_valid():
             question = form.save(commit=False)  # commit=False: 임시 저장
             question.create_date = timezone.now()
