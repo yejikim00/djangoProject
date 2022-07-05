@@ -18,3 +18,4 @@ class Answer(models.Model):  # ForeignKey: 다른 모델을 속성으로 가지�
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     content = models.TextField()
     create_date = models.DateTimeField()
+    modify_date = models.DateTimeField(null=True, blank=True)

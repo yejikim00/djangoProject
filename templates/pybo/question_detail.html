@@ -16,6 +16,12 @@
             <div class="card-body">           <!-- "white-space: pre-line: 글 내용의 줄바꿈을 정상적으로 표시하기 위해 적용한 스타일. -->
                 <div class="card-text" style="white-space: pre-line;">{{ question.content }}</div> <!-- white-space: 공백(줄바꿈, 들여쓰기, space 등), pre-line: 공백을 여러 개 넣어도 1개만 표시. -->
                 <div class="d-flex justify-content-end"> <!-- 컴포넌트 우측 정렬 -->
+                    {% if question.modify_date %}
+                        <div class="badge bg-light text-dark p-2 text-start mx-3">
+                            <div class="mb-2">modified at</div>
+                            <div>{{ question.modify_date }}</div>
+                        </div>
+                    {% endif %}
                     <div class="badge bg-light text-dark p-2 text-start"> {# bg-light: 연회색 배경 #}
                         <div class="mb-2">{{ question.author.username }}</div>
                         <div>{{ question.create_date }}</div>
@@ -38,6 +44,12 @@
                 <div class="card-body">
                     <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
                     <div class="d-flex justify-content-end">
+                        {% if answer.modify_date %}
+                            <div class="badge bg-light text-dark p-2 text-start mx-3">
+                                <div class="mb-2">modified at</div>
+                                <div>{{ answer.modify_date }}</div>
+                            </div>
+                        {% endif %}
                         <div class="badge bg-light text-dark p-2 text-start">
                             <div class="mb-2">{{ answer.author.username }}</div>
                             <div>{{ answer.create_date }}</div>
