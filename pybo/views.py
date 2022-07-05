@@ -5,6 +5,7 @@ from .models import Question
 from .forms import QuestionForm, AnswerForm
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def index(request):
@@ -65,3 +66,22 @@ def question_create(request):
         form = QuestionForm()
     context = {'form': form}    # {'form': form}: 템플릿에서 질문 등록시 사용할 폼 엘리먼트 생성.
     return render(request, 'pybo/question_form.html', context)  # 이게 데이터 입력하는 form창 불러오는 것.
+
+
+@login_required(login_url='common:login')
+def question_modify(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    if request.user != question.author:
+        messages.error(request, '수정권한이 없습니다.')
+        return redirect('pybo:detail', question_id=question_id)
+    if request.method == "POST":
+        form = QuestionForm(request.POST, instance=question)  # instance 값을 기준으로 QuestionForm을 생성하지만, request.POST 값으로 덮어써라.
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.modify_date = timezone.now()  # 수정일시 저장
+            question.save()
+            return redirect('pybo:detail', question_id=question_id)
+    else:
+        form = QuestionForm(instance=question)  # 폼의 속성값이 instance 값으로 채워짐. 따라서 수정 화면에는 기존의 제목과 내용이 채워져 있음.
+    context = {'form': form}
+    return render(request, 'pybo/question_form.html', context)
